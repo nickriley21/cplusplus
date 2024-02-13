@@ -34,7 +34,8 @@ int main()
 
         freq += 0.005f; // change how fast you want the colors to change
 
-        updateColor(cube, freq, 0, 2, 4, 128, 127);
+        updateColor(cube, freq, 0, 2, 4, 128, 127);   // regular rainbow
+        // updateColor(cube, freq, 0, 2, 4, 230, 25); // pastels
 
         updatePositionAndVelocity(cube, velocity);
 
