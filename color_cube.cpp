@@ -38,7 +38,7 @@ int main()
 
         updatePositionAndVelocity(cube, velocity);
 
-        // window.clear(); // getting rid of this for cool color changing effect.
+        // window.clear(); // getting rid of this for cool drawing effect.
 
         window.draw(cube);
 
