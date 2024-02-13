@@ -83,7 +83,6 @@ void updatePositionAndVelocity(sf::RectangleShape &cube, sf::Vector2f &velocity,
     {
         velocity.y = -velocity.y;
         position.y = 0;
-        // deltaTime = 0;
     }
     else if (position.y + CUBE_HEIGHT > WINDOW_HEIGHT)
     {
