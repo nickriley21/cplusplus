@@ -12,8 +12,6 @@ int main() {
     sf::RectangleShape cube(sf::Vector2f(CUBE_WIDTH, CUBE_HEIGHT));
     cube.setFillColor(sf::Color::Red);
 
-
-
     sf::Vector2f position(100, 100);
     sf::Vector2f velocity(2, 2); 
 
