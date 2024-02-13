@@ -1,3 +1,0 @@
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
-
-replace 0.0 with what ever your number is after starting XLaunch.
