@@ -14,6 +14,8 @@ const int WINDOW_HEIGHT = 600;
 
 const int ARR_LEN = 50;
 
+const int SLEEP_MILLIS = 1;
+
 const int ITEM_WIDTH = WINDOW_WIDTH / ARR_LEN;
 const int ITEM_HEIGHT_DIFF = WINDOW_HEIGHT / ARR_LEN;
 
@@ -57,7 +59,7 @@ int main()
                     items[j - 1].setFillColor(sf::Color::White);
                 }
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
 
                 if (items[j].getSize().y < min)
                 {

@@ -12,7 +12,9 @@ void swap(sf::RectangleShape &a, sf::RectangleShape &b);
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
-const int ARR_LEN = 50;
+const int ARR_LEN = 400;
+
+const int SLEEP_MILLIS = 1;
 
 const int ITEM_WIDTH = WINDOW_WIDTH / ARR_LEN;
 const int ITEM_HEIGHT_DIFF = WINDOW_HEIGHT / ARR_LEN;
@@ -46,7 +48,7 @@ int main()
             items[i].setFillColor(sf::Color::Red);
             while (j > 0 && items[j].getSize().y < items[j - 1].getSize().y)
             {
-                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
 
                 swap(items[j - 1], items[j]);
 

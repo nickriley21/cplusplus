@@ -11,17 +11,19 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
 void createShuffled(sf::RectangleShape items[]);
 void swap(sf::RectangleShape &a, sf::RectangleShape &b);
 
-const int WINDOW_WIDTH = 1600;
+const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
 const int ARR_LEN = 400;
+
+const int SLEEP_MILLIS = 1;
 
 const int ITEM_WIDTH = WINDOW_WIDTH / ARR_LEN;
 const int ITEM_HEIGHT_DIFF = WINDOW_HEIGHT / ARR_LEN;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Insertion sort");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Merge sort");
 
     sf::RectangleShape items[ARR_LEN];
 
@@ -79,8 +81,11 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
     int left = 0;
     int right = 0;
     int i = start;
+
+    // merge until you run out of one of the lists
     while (left < leftLength && right < rightLength)
     {
+        // current left is smaller, do that one
         if (itemsLeft[left].getSize().y < itemsRight[right].getSize().y)
         {
             items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsLeft[left].getSize().y));
@@ -97,13 +102,14 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         }
         i++;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
         window.clear();
         for (int j = 0; j < ARR_LEN; j++)
             window.draw(items[j]);
         window.display();
     }
 
+    // remaining left
     while (left < leftLength)
     {
         items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsLeft[left].getSize().y));
@@ -112,13 +118,14 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         left++;
         i++;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
         window.clear();
         for (int j = 0; j < ARR_LEN; j++)
             window.draw(items[j]);
         window.display();
     }
 
+    // remaining right
     while (right < rightLength)
     {
         items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsRight[right].getSize().y));
@@ -127,7 +134,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         right++;
         i++;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
         window.clear();
         for (int j = 0; j < ARR_LEN; j++)
             window.draw(items[j]);
