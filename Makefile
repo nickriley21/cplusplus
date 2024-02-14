@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -std=c++11 -Wall
 SMFL_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-all: bin bin/bouncing_cube bin/color_cube bin/gravity_cube bin/selection_sort bin/bubble_sort
+all: bin bin/bouncing_cube bin/color_cube bin/gravity_cube bin/selection_sort bin/bubble_sort bin/insertion_sort
 
 bin:
 	mkdir -p bin
@@ -21,6 +21,9 @@ bin/selection_sort: selection_sort.cpp
 
 bin/bubble_sort: bubble_sort.cpp
 	$(CC) $(CFLAGS)  bubble_sort.cpp -o bin/bubble_sort $(SMFL_LIBS)
+
+bin/insertion_sort: insertion_sort.cpp
+	$(CC) $(CFLAGS)  insertion_sort.cpp -o bin/insertion_sort $(SMFL_LIBS)
 
 bin/hello: hello.cpp
 	$(CC) hello.cpp -o bin/hello

@@ -36,10 +36,9 @@ int main()
         }
 
         // green for sorted already
-        // red for current minimum
-        // yellow for being checked against current minimum
+        // red for current value being bubbled up
 
-        // selection sort
+        // bubble sort
         if (i < ARR_LEN)
         {
             for (int j = 0; j < ARR_LEN - i - 1; j++)

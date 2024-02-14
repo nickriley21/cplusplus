@@ -19,7 +19,7 @@ const int ITEM_HEIGHT_DIFF = WINDOW_HEIGHT / ARR_LEN;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Selection sort");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Insertion sort");
 
     sf::RectangleShape items[ARR_LEN];
 
@@ -36,47 +36,31 @@ int main()
         }
 
         // green for sorted already
-        // red for current minimum
-        // yellow for being checked against current minimum
+        // red for current value being inserted
 
         // selection sort
         if (i < ARR_LEN)
         {
-            int min = items[i].getSize().y;
-            int min_index = i;
-
-            // first value is current min, so make it red
+            // insertion swap as you find where it belongs in the sorted list
+            int j = i;
             items[i].setFillColor(sf::Color::Red);
-
-            for (int j = i + 1; j < ARR_LEN; j++)
+            while (j > 0 && items[j].getSize().y < items[j - 1].getSize().y)
             {
-                items[j].setFillColor(sf::Color::Yellow);           // current item being checked is yellow
-
-                if (items[j - 1].getFillColor() != sf::Color::Red)  // change previous back to white from yellow, unless it is a red
-                {
-                    items[j - 1].setFillColor(sf::Color::White);
-                }
-
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-                if (items[j].getSize().y < min)
-                {
-                    items[min_index].setFillColor(sf::Color::White);
-                    min = items[j].getSize().y;
-                    min_index = j;
-                    items[min_index].setFillColor(sf::Color::Red);
-                }
+                swap(items[j - 1], items[j]);
+
+                items[j].setFillColor(sf::Color::Green); // value that is now in order
+                items[j-1].setFillColor(sf::Color::Red); // value that is being inserted further
+                j--;
 
                 window.clear();
                 for (sf::RectangleShape item : items)
                     window.draw(item);
                 window.display();
             }
-
-            swap(items[i], items[min_index]);                       // swap them
-            items[min_index].setFillColor(sf::Color::White);        // minimum index spot is now swapped. go back to white
-            items[ARR_LEN - 1].setFillColor(sf::Color::White);      // change from yellow back to white. 
-            items[i].setFillColor(sf::Color::Green);                // sorted, change to green!
+            items[j].setFillColor(sf::Color::Green);
+            items[i].setFillColor(sf::Color::Green);
 
             i++;
         }
