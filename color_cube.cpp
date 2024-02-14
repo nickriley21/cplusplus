@@ -13,7 +13,7 @@ const int CUBE_HEIGHT = 50;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Bouncing cube");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Color cube");
 
     sf::RectangleShape cube(sf::Vector2f(CUBE_WIDTH, CUBE_HEIGHT));
     cube.setFillColor(sf::Color(255, 0, 0));
