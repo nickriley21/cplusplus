@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <chrono>
 #include "SortManager.hpp"
 
 void insertionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
@@ -38,6 +40,8 @@ int main()
 // red for current value being inserted
 void insertionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
+    auto startTime = std::chrono::high_resolution_clock::now();
+
     for (int i = 0; i < SortManager::ARR_LEN; i++)
     {
         // insertion swap as you find where it belongs in the sorted list
@@ -58,4 +62,9 @@ void insertionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleS
     }
 
     manager.displayItems(window, items);
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+    std::cout << "Time taken for insertion sort: " << duration.count() << " milliseconds" << std::endl;
 }

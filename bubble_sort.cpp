@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <chrono>
 #include "SortManager.hpp"
 
 void bubbleSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
@@ -38,6 +40,8 @@ int main()
 // red for current value being bubbled up
 void bubbleSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
+    auto startTime = std::chrono::high_resolution_clock::now();
+
     for (int i = 0; i < SortManager::ARR_LEN; i++)
     {
         for (int j = 0; j < SortManager::ARR_LEN - i - 1; j++)
@@ -58,4 +62,9 @@ void bubbleSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShap
     }
 
     manager.displayItems(window, items);
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+    std::cout << "Time taken for bubble sort: " << duration.count() << " milliseconds" << std::endl;
 }

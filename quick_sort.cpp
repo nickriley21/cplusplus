@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <chrono>
 #include "SortManager.hpp"
 
 void quickSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int end);
@@ -13,8 +15,15 @@ int main()
     sf::RectangleShape items[SortManager::ARR_LEN];
 
     manager.createShuffled(window, items);
+    
+    auto startTime = std::chrono::high_resolution_clock::now();
 
     quickSort(manager, window, items, 0, SortManager::ARR_LEN - 1);
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+    std::cout << "Time taken for quick sort: " << duration.count() << " milliseconds" << std::endl;
 
     while (window.isOpen())
     {
@@ -37,6 +46,7 @@ int main()
 
 void quickSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int end)
 {
+
     if (start < end)
     {
         int p = partition(manager, window, items, start, end);

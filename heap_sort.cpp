@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <chrono>
 #include "SortManager.hpp"
 
 void heapSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
@@ -38,6 +40,8 @@ int main()
 // in sorted position is green
 void heapSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
+    auto startTime = std::chrono::high_resolution_clock::now();
+
     // for second second lowest layer and above, heapify
     for (int i = SortManager::ARR_LEN / 2 - 1; i >= 0; i--)
         heapify(manager, window, items, i, SortManager::ARR_LEN);
@@ -55,6 +59,11 @@ void heapSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape 
     items[0].setFillColor(sf::Color::Green);
 
     manager.displayItems(window, items);
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+    std::cout << "Time taken for heap sort: " << duration.count() << " milliseconds" << std::endl;
 }
 
 // for index i >= 0,

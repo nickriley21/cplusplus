@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <chrono>
 #include "SortManager.hpp"
 
 void selectionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
@@ -39,6 +41,8 @@ int main()
 // yellow for being checked against current minimum
 void selectionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
+    auto startTime = std::chrono::high_resolution_clock::now();
+
     for (int i = 0; i < SortManager::ARR_LEN; i++)
     {
         int min = items[i].getSize().y;
@@ -74,4 +78,9 @@ void selectionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleS
     }
 
     manager.displayItems(window, items);
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+    std::cout << "Time taken for selection sort: " << duration.count() << " milliseconds" << std::endl;
 }
