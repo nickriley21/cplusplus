@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "SortManager.hpp"
 
-void insert(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i);
+void insertionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
 
 int main()
 {
@@ -13,7 +13,8 @@ int main()
 
     manager.createShuffled(window, items);
 
-    int i = 0;
+    insertionSort(manager, window, items);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -23,14 +24,11 @@ int main()
                 window.close();
         }
 
-        // insertion sort
-        if (i < SortManager::ARR_LEN)
+        for (sf::RectangleShape item : items)
         {
-            insert(manager, window, items, i);
-            i++;
+            window.draw(item);
         }
-
-        manager.displayItems(window, items);
+        window.display();
     }
 
     return 0;
@@ -38,22 +36,26 @@ int main()
 
 // green for sorted already
 // red for current value being inserted
-void insert(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i)
+void insertionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
-
-    // insertion swap as you find where it belongs in the sorted list
-    int j = i;
-    items[i].setFillColor(sf::Color::Red);
-    while (j > 0 && items[j].getSize().y < items[j - 1].getSize().y)
+    for (int i = 0; i < SortManager::ARR_LEN; i++)
     {
-        manager.swap(items[j - 1], items[j]);
+        // insertion swap as you find where it belongs in the sorted list
+        int j = i;
+        items[i].setFillColor(sf::Color::Red);
+        while (j > 0 && items[j].getSize().y < items[j - 1].getSize().y)
+        {
+            manager.swap(items[j - 1], items[j]);
 
-        items[j].setFillColor(sf::Color::Green);   // value that is now in order
-        items[j - 1].setFillColor(sf::Color::Red); // value that is being inserted further
-        j--;
+            items[j].setFillColor(sf::Color::Green);   // value that is now in order
+            items[j - 1].setFillColor(sf::Color::Red); // value that is being inserted further
+            j--;
 
-        manager.displayItems(window, items);
+            manager.displayItems(window, items);
+        }
+        items[j].setFillColor(sf::Color::Green);
+        items[i].setFillColor(sf::Color::Green);
     }
-    items[j].setFillColor(sf::Color::Green);
-    items[i].setFillColor(sf::Color::Green);
+
+    manager.displayItems(window, items);
 }

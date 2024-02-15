@@ -47,21 +47,40 @@ void SortManager::swap(sf::RectangleShape &a, sf::RectangleShape &b)
 
 void SortManager::displayItems(sf::RenderWindow &window, sf::RectangleShape items[])
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
-    window.clear();
-    for (int j = 0; j < ARR_LEN; j++)
-        window.draw(items[j]);
-    window.display();
+    if (DISPLAY && window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
+        window.clear();
+        for (int j = 0; j < ARR_LEN; j++)
+            window.draw(items[j]);
+        window.display();
+    }
 }
 void SortManager::displayAndWhiteItemsInRange(sf::RenderWindow &window, sf::RectangleShape items[], int start, int end)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
-    window.clear();
-    for (int j = 0; j < ARR_LEN; j++)
+    if (DISPLAY && window.isOpen())
     {
-        window.draw(items[j]);
-        if (j <= end && j >= start)
-            items[j].setFillColor(sf::Color::White);
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
+        window.clear();
+        for (int j = 0; j < ARR_LEN; j++)
+        {
+            window.draw(items[j]);
+            if (j <= end && j >= start)
+                items[j].setFillColor(sf::Color::White);
+        }
+        window.display();
     }
-    window.display();
 }

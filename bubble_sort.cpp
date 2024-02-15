@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "SortManager.hpp"
 
-void bubble(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i);
+void bubbleSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
 
 int main()
 {
@@ -13,7 +13,8 @@ int main()
 
     manager.createShuffled(window, items);
 
-    int i = 0;
+    bubbleSort(manager, window, items);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -23,14 +24,11 @@ int main()
                 window.close();
         }
 
-        // bubble sort
-        if (i < SortManager::ARR_LEN)
+        for (sf::RectangleShape item : items)
         {
-            bubble(manager, window, items, i);
-            i++;
+            window.draw(item);
         }
-
-        manager.displayItems(window, items);
+        window.display();
     }
 
     return 0;
@@ -38,21 +36,26 @@ int main()
 
 // green for sorted already
 // red for current value being bubbled up
-void bubble(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i)
+void bubbleSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
-    for (int j = 0; j < SortManager::ARR_LEN - i - 1; j++)
+    for (int i = 0; i < SortManager::ARR_LEN; i++)
     {
-        // bubble the larger one up the list
-        if (items[j].getSize().y > items[j + 1].getSize().y)
+        for (int j = 0; j < SortManager::ARR_LEN - i - 1; j++)
         {
-            manager.swap(items[j], items[j + 1]);
+            // bubble the larger one up the list
+            if (items[j].getSize().y > items[j + 1].getSize().y)
+            {
+                manager.swap(items[j], items[j + 1]);
+            }
+
+            items[j].setFillColor(sf::Color::White);   // smaller goes to j, it is white
+            items[j + 1].setFillColor(sf::Color::Red); // larger gies to j + 1, it is red
+
+            manager.displayItems(window, items);
         }
-
-        items[j].setFillColor(sf::Color::White);   // smaller goes to j, it is white
-        items[j + 1].setFillColor(sf::Color::Red); // larger gies to j + 1, it is red
-
-        manager.displayItems(window, items);
+        // this part is sorted, so green
+        items[SortManager::ARR_LEN - i - 1].setFillColor(sf::Color::Green);
     }
-    // this part is sorted, so green
-    items[SortManager::ARR_LEN - i - 1].setFillColor(sf::Color::Green);
+
+    manager.displayItems(window, items);
 }

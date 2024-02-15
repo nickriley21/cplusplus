@@ -25,7 +25,11 @@ int main()
                 window.close();
         }
 
-        manager.displayItems(window, items);
+        for (sf::RectangleShape item : items)
+        {
+            window.draw(item);
+        }
+        window.display();
     }
 
     return 0;
@@ -49,6 +53,8 @@ void heapSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape 
     }
     // don't forget the last guy
     items[0].setFillColor(sf::Color::Green);
+
+    manager.displayItems(window, items);
 }
 
 // for index i >= 0,

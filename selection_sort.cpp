@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "SortManager.hpp"
 
-void select(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i);
+void selectionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[]);
 
 int main()
 {
@@ -13,7 +13,8 @@ int main()
 
     manager.createShuffled(window, items);
 
-    int i = 0;
+    selectionSort(manager, window, items);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -23,14 +24,11 @@ int main()
                 window.close();
         }
 
-        // selection sort
-        if (i < SortManager::ARR_LEN)
+        for (sf::RectangleShape item : items)
         {
-            select(manager, window, items, i);
-            i++;
+            window.draw(item);
         }
-
-        manager.displayItems(window, items);
+        window.display();
     }
 
     return 0;
@@ -39,36 +37,41 @@ int main()
 // green for sorted already
 // red for current minimum
 // yellow for being checked against current minimum
-void select(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i)
+void selectionSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[])
 {
-    int min = items[i].getSize().y;
-    int min_index = i;
-
-    // first value is current min, so make it red
-    items[i].setFillColor(sf::Color::Red);
-
-    for (int j = i + 1; j < SortManager::ARR_LEN; j++)
+    for (int i = 0; i < SortManager::ARR_LEN; i++)
     {
-        items[j].setFillColor(sf::Color::Yellow); // current item being checked is yellow
+        int min = items[i].getSize().y;
+        int min_index = i;
 
-        if (items[j - 1].getFillColor() != sf::Color::Red) // change previous back to white from yellow, unless it is a red
+        // first value is current min, so make it red
+        items[i].setFillColor(sf::Color::Red);
+
+        for (int j = i + 1; j < SortManager::ARR_LEN; j++)
         {
-            items[j - 1].setFillColor(sf::Color::White);
+            items[j].setFillColor(sf::Color::Yellow); // current item being checked is yellow
+
+            if (items[j - 1].getFillColor() != sf::Color::Red) // change previous back to white from yellow, unless it is a red
+            {
+                items[j - 1].setFillColor(sf::Color::White);
+            }
+
+            if (items[j].getSize().y < min)
+            {
+                items[min_index].setFillColor(sf::Color::White);
+                min = items[j].getSize().y;
+                min_index = j;
+                items[min_index].setFillColor(sf::Color::Red);
+            }
+
+            manager.displayItems(window, items);
         }
 
-        if (items[j].getSize().y < min)
-        {
-            items[min_index].setFillColor(sf::Color::White);
-            min = items[j].getSize().y;
-            min_index = j;
-            items[min_index].setFillColor(sf::Color::Red);
-        }
-
-        manager.displayItems(window, items);
+        manager.swap(items[i], items[min_index]);                       // swap them
+        items[min_index].setFillColor(sf::Color::White);                // minimum index spot is now swapped. go back to white
+        items[SortManager::ARR_LEN - 1].setFillColor(sf::Color::White); // change from yellow back to white.
+        items[i].setFillColor(sf::Color::Green);                        // sorted, change to green!
     }
 
-    manager.swap(items[i], items[min_index]);                       // swap them
-    items[min_index].setFillColor(sf::Color::White);                // minimum index spot is now swapped. go back to white
-    items[SortManager::ARR_LEN - 1].setFillColor(sf::Color::White); // change from yellow back to white.
-    items[i].setFillColor(sf::Color::Green);                        // sorted, change to green!
+    manager.displayItems(window, items);
 }

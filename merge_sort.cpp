@@ -25,7 +25,11 @@ int main()
                 window.close();
         }
 
-        manager.displayItems(window, items);
+        for (sf::RectangleShape item : items)
+        {
+            window.draw(item);
+        }
+        window.display();
     }
 
     return 0;
@@ -40,6 +44,8 @@ void mergeSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape
         mergeSort(manager, window, items, middle + 1, end);
         merge(manager, window, items, start, middle, end);
     }
+
+    manager.displayItems(window, items);
 }
 
 // values from left are yellow

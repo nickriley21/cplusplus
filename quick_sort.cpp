@@ -25,7 +25,11 @@ int main()
                 window.close();
         }
 
-        manager.displayItems(window, items);
+        for (sf::RectangleShape item : items)
+        {
+            window.draw(item);
+        }
+        window.display();
     }
 
     return 0;
@@ -40,6 +44,8 @@ void quickSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape
         quickSort(manager, window, items, start, p - 1);
         quickSort(manager, window, items, p + 1, end);
     }
+
+    manager.displayItems(window, items);
 }
 
 // choose to partition on last element

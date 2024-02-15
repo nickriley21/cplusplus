@@ -8,12 +8,13 @@
 class SortManager
 {
 public:
-    static constexpr int ARR_LEN = 100;
+    static constexpr int ARR_LEN = 50;
     static constexpr int WINDOW_WIDTH = 800;
     static constexpr int WINDOW_HEIGHT = 600;
     static constexpr int SLEEP_MILLIS = 1;
     static constexpr int ITEM_WIDTH = WINDOW_WIDTH / ARR_LEN;
     static constexpr int ITEM_HEIGHT_DIFF = WINDOW_HEIGHT / ARR_LEN;
+    static constexpr bool DISPLAY = true;
 
     SortManager();
 
