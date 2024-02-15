@@ -52,8 +52,8 @@ int main()
 
                 swap(items[j - 1], items[j]);
 
-                items[j].setFillColor(sf::Color::Green); // value that is now in order
-                items[j-1].setFillColor(sf::Color::Red); // value that is being inserted further
+                items[j].setFillColor(sf::Color::Green);   // value that is now in order
+                items[j - 1].setFillColor(sf::Color::Red); // value that is being inserted further
                 j--;
 
                 window.clear();

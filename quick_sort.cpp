@@ -89,7 +89,8 @@ int partition(sf::RenderWindow &window, sf::RectangleShape items[], int start, i
 
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
     window.clear();
-    for (int j = 0; j < ARR_LEN; j++) {
+    for (int j = 0; j < ARR_LEN; j++)
+    {
         window.draw(items[j]);
         if (j <= end && j >= start)
             items[j].setFillColor(sf::Color::White);

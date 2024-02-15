@@ -52,9 +52,9 @@ int main()
 
             for (int j = i + 1; j < ARR_LEN; j++)
             {
-                items[j].setFillColor(sf::Color::Yellow);           // current item being checked is yellow
+                items[j].setFillColor(sf::Color::Yellow); // current item being checked is yellow
 
-                if (items[j - 1].getFillColor() != sf::Color::Red)  // change previous back to white from yellow, unless it is a red
+                if (items[j - 1].getFillColor() != sf::Color::Red) // change previous back to white from yellow, unless it is a red
                 {
                     items[j - 1].setFillColor(sf::Color::White);
                 }
@@ -75,10 +75,10 @@ int main()
                 window.display();
             }
 
-            swap(items[i], items[min_index]);                       // swap them
-            items[min_index].setFillColor(sf::Color::White);        // minimum index spot is now swapped. go back to white
-            items[ARR_LEN - 1].setFillColor(sf::Color::White);      // change from yellow back to white. 
-            items[i].setFillColor(sf::Color::Green);                // sorted, change to green!
+            swap(items[i], items[min_index]);                  // swap them
+            items[min_index].setFillColor(sf::Color::White);   // minimum index spot is now swapped. go back to white
+            items[ARR_LEN - 1].setFillColor(sf::Color::White); // change from yellow back to white.
+            items[i].setFillColor(sf::Color::Green);           // sorted, change to green!
 
             i++;
         }

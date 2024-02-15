@@ -48,13 +48,13 @@ int main()
                 std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
 
                 // bubble the larger one up the list
-                if (items[j].getSize().y > items[j+1].getSize().y)
+                if (items[j].getSize().y > items[j + 1].getSize().y)
                 {
                     swap(items[j], items[j + 1]);
                 }
 
-                items[j].setFillColor(sf::Color::White);        // smaller goes to j, it is white
-                items[j + 1].setFillColor(sf::Color::Red);      // larger gies to j + 1, it is red
+                items[j].setFillColor(sf::Color::White);   // smaller goes to j, it is white
+                items[j + 1].setFillColor(sf::Color::Red); // larger gies to j + 1, it is red
 
                 window.clear();
                 for (sf::RectangleShape item : items)

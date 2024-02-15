@@ -65,6 +65,8 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
     int leftLength = middle - start + 1;
     int rightLength = end - middle;
 
+    items[middle].setFillColor(sf::Color::Red);
+
     auto *itemsLeft = new sf::RectangleShape[leftLength];
     auto *itemsRight = new sf::RectangleShape[rightLength];
 
@@ -90,6 +92,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         {
             items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsLeft[left].getSize().y));
             items[i].setPosition(sf::Vector2f(items[i].getPosition().x, itemsLeft[left].getPosition().y));
+            items[i].setFillColor(sf::Color::Yellow);
 
             left++;
         }
@@ -97,6 +100,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         {
             items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsRight[right].getSize().y));
             items[i].setPosition(sf::Vector2f(items[i].getPosition().x, itemsRight[right].getPosition().y));
+            items[i].setFillColor(sf::Color::Green);
 
             right++;
         }
@@ -114,6 +118,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
     {
         items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsLeft[left].getSize().y));
         items[i].setPosition(sf::Vector2f(items[i].getPosition().x, itemsLeft[left].getPosition().y));
+        items[i].setFillColor(sf::Color::Yellow);
 
         left++;
         i++;
@@ -130,6 +135,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
     {
         items[i].setSize(sf::Vector2f(ITEM_WIDTH, itemsRight[right].getSize().y));
         items[i].setPosition(sf::Vector2f(items[i].getPosition().x, itemsRight[right].getPosition().y));
+        items[i].setFillColor(sf::Color::Green);
 
         right++;
         i++;
@@ -140,6 +146,16 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
             window.draw(items[j]);
         window.display();
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
+    window.clear();
+    for (int j = 0; j < ARR_LEN; j++)
+    {
+        window.draw(items[j]);
+        if (j <= end && j >= start)
+            items[j].setFillColor(sf::Color::White);
+    }
+    window.display();
 
     delete[] itemsLeft;
     delete[] itemsRight;
