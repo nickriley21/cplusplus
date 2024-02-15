@@ -29,12 +29,8 @@ void SortManager::createShuffled(sf::RenderWindow &window, sf::RectangleShape it
     {
         int j = rand() % (i + 1);
         swap(items[i], items[j]);
-        
-        std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-        window.clear();
-        for (int j = 0; j < ARR_LEN; j++)
-            window.draw(items[j]);
-        window.display();
+
+        displayItems(window, items);
     }
 }
 
@@ -48,4 +44,25 @@ void SortManager::swap(sf::RectangleShape &a, sf::RectangleShape &b)
     // re-adjust heights
     a.setPosition(sf::Vector2f(a.getPosition().x, WINDOW_HEIGHT - a.getSize().y));
     b.setPosition(sf::Vector2f(b.getPosition().x, WINDOW_HEIGHT - b.getSize().y));
+}
+
+void SortManager::displayItems(sf::RenderWindow &window, sf::RectangleShape items[])
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
+    window.clear();
+    for (int j = 0; j < ARR_LEN; j++)
+        window.draw(items[j]);
+    window.display();
+}
+void SortManager::displayAndWhiteItemsInRange(sf::RenderWindow &window, sf::RectangleShape items[], int start, int end)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
+    window.clear();
+    for (int j = 0; j < ARR_LEN; j++)
+    {
+        window.draw(items[j]);
+        if (j <= end && j >= start)
+            items[j].setFillColor(sf::Color::White);
+    }
+    window.display();
 }

@@ -1,10 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <cstdlib>
-#include <ctime>
-#include <climits>
-#include <iostream>
-#include <thread>
-#include <chrono>
 #include "SortManager.hpp"
 
 int main()
@@ -49,8 +43,6 @@ int main()
                     items[j - 1].setFillColor(sf::Color::White);
                 }
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-
                 if (items[j].getSize().y < min)
                 {
                     items[min_index].setFillColor(sf::Color::White);
@@ -59,10 +51,7 @@ int main()
                     items[min_index].setFillColor(sf::Color::Red);
                 }
 
-                window.clear();
-                for (sf::RectangleShape item : items)
-                    window.draw(item);
-                window.display();
+                manager.displayItems(window, items);
             }
 
             manager.swap(items[i], items[min_index]);                       // swap them
@@ -73,10 +62,7 @@ int main()
             i++;
         }
 
-        window.clear();
-        for (sf::RectangleShape item : items)
-            window.draw(item);
-        window.display();
+        manager.displayItems(window, items);
     }
 
     return 0;

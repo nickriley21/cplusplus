@@ -1,10 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <cstdlib>
-#include <ctime>
-#include <climits>
-#include <iostream>
-#include <thread>
-#include <chrono>
 #include "SortManager.hpp"
 
 int main()
@@ -35,8 +29,6 @@ int main()
         {
             for (int j = 0; j < SortManager::ARR_LEN - i - 1; j++)
             {
-                std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-
                 // bubble the larger one up the list
                 if (items[j].getSize().y > items[j + 1].getSize().y)
                 {
@@ -46,10 +38,7 @@ int main()
                 items[j].setFillColor(sf::Color::White);   // smaller goes to j, it is white
                 items[j + 1].setFillColor(sf::Color::Red); // larger gies to j + 1, it is red
 
-                window.clear();
-                for (sf::RectangleShape item : items)
-                    window.draw(item);
-                window.display();
+                manager.displayItems(window, items);
             }
             // this part is sorted, so green
             items[SortManager::ARR_LEN - i - 1].setFillColor(sf::Color::Green);
@@ -57,10 +46,7 @@ int main()
             i++;
         }
 
-        window.clear();
-        for (sf::RectangleShape item : items)
-            window.draw(item);
-        window.display();
+        manager.displayItems(window, items);
     }
 
     return 0;

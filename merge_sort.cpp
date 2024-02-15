@@ -1,14 +1,8 @@
 #include <SFML/Graphics.hpp>
-#include <cstdlib>
-#include <ctime>
-#include <climits>
-#include <iostream>
-#include <thread>
-#include <chrono>
 #include "SortManager.hpp"
 
-void mergeSort(sf::RenderWindow &window, sf::RectangleShape items[], int start, int end);
-void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int middle, int end);
+void mergeSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int end);
+void merge(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int middle, int end);
 
 int main()
 {
@@ -20,7 +14,7 @@ int main()
 
     manager.createShuffled(window, items);
 
-    mergeSort(window, items, 0, SortManager::ARR_LEN - 1);
+    mergeSort(manager, window, items, 0, SortManager::ARR_LEN - 1);
 
     while (window.isOpen())
     {
@@ -31,27 +25,24 @@ int main()
                 window.close();
         }
 
-        window.clear();
-        for (sf::RectangleShape item : items)
-            window.draw(item);
-        window.display();
+        manager.displayItems(window, items);
     }
 
     return 0;
 }
 
-void mergeSort(sf::RenderWindow &window, sf::RectangleShape items[], int start, int end)
+void mergeSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int end)
 {
     if (start < end)
     {
         int middle = (start + end) / 2;
-        mergeSort(window, items, start, middle);
-        mergeSort(window, items, middle + 1, end);
-        merge(window, items, start, middle, end);
+        mergeSort(manager, window, items, start, middle);
+        mergeSort(manager, window, items, middle + 1, end);
+        merge(manager, window, items, start, middle, end);
     }
 }
 
-void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int middle, int end)
+void merge(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int middle, int end)
 {
     int leftLength = middle - start + 1;
     int rightLength = end - middle;
@@ -97,11 +88,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         }
         i++;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-        window.clear();
-        for (int j = 0; j < SortManager::ARR_LEN; j++)
-            window.draw(items[j]);
-        window.display();
+        manager.displayItems(window, items);
     }
 
     // remaining left
@@ -114,11 +101,7 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         left++;
         i++;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-        window.clear();
-        for (int j = 0; j < SortManager::ARR_LEN; j++)
-            window.draw(items[j]);
-        window.display();
+        manager.displayItems(window, items);
     }
 
     // remaining right
@@ -131,22 +114,10 @@ void merge(sf::RenderWindow &window, sf::RectangleShape items[], int start, int 
         right++;
         i++;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-        window.clear();
-        for (int j = 0; j < SortManager::ARR_LEN; j++)
-            window.draw(items[j]);
-        window.display();
+        manager.displayItems(window, items);
     }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
-    window.clear();
-    for (int j = 0; j < SortManager::ARR_LEN; j++)
-    {
-        window.draw(items[j]);
-        if (j <= end && j >= start)
-            items[j].setFillColor(sf::Color::White);
-    }
-    window.display();
+    manager.displayAndWhiteItemsInRange(window, items, start, end);
 
     delete[] itemsLeft;
     delete[] itemsRight;

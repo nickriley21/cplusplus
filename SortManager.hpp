@@ -19,6 +19,8 @@ public:
 
     void createShuffled(sf::RenderWindow &window, sf::RectangleShape items[]);
     void swap(sf::RectangleShape &a, sf::RectangleShape &b);
+    void displayItems(sf::RenderWindow &window, sf::RectangleShape items[]);
+    void displayAndWhiteItemsInRange(sf::RenderWindow &window, sf::RectangleShape items[], int start, int end);
 };
 
 #endif
