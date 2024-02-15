@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "SortManager.hpp"
 
+void insert(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i);
+
 int main()
 {
     SortManager manager;
@@ -21,28 +23,10 @@ int main()
                 window.close();
         }
 
-        // green for sorted already
-        // red for current value being inserted
-
-        // selection sort
+        // insertion sort
         if (i < SortManager::ARR_LEN)
         {
-            // insertion swap as you find where it belongs in the sorted list
-            int j = i;
-            items[i].setFillColor(sf::Color::Red);
-            while (j > 0 && items[j].getSize().y < items[j - 1].getSize().y)
-            {
-                manager.swap(items[j - 1], items[j]);
-
-                items[j].setFillColor(sf::Color::Green);   // value that is now in order
-                items[j - 1].setFillColor(sf::Color::Red); // value that is being inserted further
-                j--;
-
-                manager.displayItems(window, items);
-            }
-            items[j].setFillColor(sf::Color::Green);
-            items[i].setFillColor(sf::Color::Green);
-
+            insert(manager, window, items, i);
             i++;
         }
 
@@ -50,4 +34,26 @@ int main()
     }
 
     return 0;
+}
+
+// green for sorted already
+// red for current value being inserted
+void insert(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int i)
+{
+
+    // insertion swap as you find where it belongs in the sorted list
+    int j = i;
+    items[i].setFillColor(sf::Color::Red);
+    while (j > 0 && items[j].getSize().y < items[j - 1].getSize().y)
+    {
+        manager.swap(items[j - 1], items[j]);
+
+        items[j].setFillColor(sf::Color::Green);   // value that is now in order
+        items[j - 1].setFillColor(sf::Color::Red); // value that is being inserted further
+        j--;
+
+        manager.displayItems(window, items);
+    }
+    items[j].setFillColor(sf::Color::Green);
+    items[i].setFillColor(sf::Color::Green);
 }

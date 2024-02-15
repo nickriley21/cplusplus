@@ -42,7 +42,11 @@ void quickSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape
     }
 }
 
-// returns index of partition
+// choose to partition on last element
+// returns index of where the partition is placed
+// smaller than partition is green
+// larger than partition is yellow
+// partition is green
 int partition(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int end)
 {
     items[end].setFillColor(sf::Color::Red);
@@ -59,7 +63,7 @@ int partition(SortManager manager, sf::RenderWindow &window, sf::RectangleShape 
         {
             items[i].setFillColor(sf::Color::Yellow);
         }
-        
+
         manager.displayItems(window, items);
     }
     items[end].setFillColor(sf::Color::White);

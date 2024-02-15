@@ -42,6 +42,9 @@ void mergeSort(SortManager manager, sf::RenderWindow &window, sf::RectangleShape
     }
 }
 
+// values from left are yellow
+// values from right are green
+// middle value is red
 void merge(SortManager manager, sf::RenderWindow &window, sf::RectangleShape items[], int start, int middle, int end)
 {
     int leftLength = middle - start + 1;
