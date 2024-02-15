@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
-int main() {
+int main()
+{
     const int WINDOW_WIDTH = 800;
     const int WINDOW_HEIGHT = 600;
 
@@ -13,11 +14,13 @@ int main() {
     cube.setFillColor(sf::Color::Red);
 
     sf::Vector2f position(100, 100);
-    sf::Vector2f velocity(2, 2); 
+    sf::Vector2f velocity(2, 2);
 
-    while (window.isOpen()) {
+    while (window.isOpen())
+    {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event))
+        {
             if (event.type == sf::Event::Closed)
                 window.close();
         }

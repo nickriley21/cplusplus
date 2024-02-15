@@ -47,7 +47,7 @@ int main()
 
         std::cout << cube.getPosition().y << " " << velocity.y << " " << deltaTime << std::endl;
 
-        //window.clear(); // getting rid of this for cool drawing effect.
+        // window.clear(); // getting rid of this for cool drawing effect.
 
         window.draw(cube);
 
@@ -78,7 +78,7 @@ void updatePositionAndVelocity(sf::RectangleShape &cube, sf::Vector2f &velocity,
 
     // y position
     // v = acceleration * time_delta
-    // reseting time_delta when it hits the floor as we want the effect of 
+    // reseting time_delta when it hits the floor as we want the effect of
     if (position.y < 0)
     {
         velocity.y = -velocity.y;
