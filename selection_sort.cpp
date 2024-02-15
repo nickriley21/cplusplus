@@ -5,27 +5,17 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-
-void createShuffled(sf::RectangleShape items[]);
-void swap(sf::RectangleShape &a, sf::RectangleShape &b);
-
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
-
-const int ARR_LEN = 50;
-
-const int SLEEP_MILLIS = 1;
-
-const int ITEM_WIDTH = WINDOW_WIDTH / ARR_LEN;
-const int ITEM_HEIGHT_DIFF = WINDOW_HEIGHT / ARR_LEN;
+#include "SortManager.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Selection sort");
+    SortManager manager;
 
-    sf::RectangleShape items[ARR_LEN];
+    sf::RenderWindow window(sf::VideoMode(SortManager::WINDOW_WIDTH, SortManager::WINDOW_HEIGHT), "Selection sort");
 
-    createShuffled(items);
+    sf::RectangleShape items[SortManager::ARR_LEN];
+
+    manager.createShuffled(window, items);
 
     int i = 0;
     while (window.isOpen())
@@ -42,7 +32,7 @@ int main()
         // yellow for being checked against current minimum
 
         // selection sort
-        if (i < ARR_LEN)
+        if (i < SortManager::ARR_LEN)
         {
             int min = items[i].getSize().y;
             int min_index = i;
@@ -50,7 +40,7 @@ int main()
             // first value is current min, so make it red
             items[i].setFillColor(sf::Color::Red);
 
-            for (int j = i + 1; j < ARR_LEN; j++)
+            for (int j = i + 1; j < SortManager::ARR_LEN; j++)
             {
                 items[j].setFillColor(sf::Color::Yellow); // current item being checked is yellow
 
@@ -59,7 +49,7 @@ int main()
                     items[j - 1].setFillColor(sf::Color::White);
                 }
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_MILLIS));
+                std::this_thread::sleep_for(std::chrono::milliseconds(SortManager::SLEEP_MILLIS));
 
                 if (items[j].getSize().y < min)
                 {
@@ -75,10 +65,10 @@ int main()
                 window.display();
             }
 
-            swap(items[i], items[min_index]);                  // swap them
-            items[min_index].setFillColor(sf::Color::White);   // minimum index spot is now swapped. go back to white
-            items[ARR_LEN - 1].setFillColor(sf::Color::White); // change from yellow back to white.
-            items[i].setFillColor(sf::Color::Green);           // sorted, change to green!
+            manager.swap(items[i], items[min_index]);                       // swap them
+            items[min_index].setFillColor(sf::Color::White);                // minimum index spot is now swapped. go back to white
+            items[SortManager::ARR_LEN - 1].setFillColor(sf::Color::White); // change from yellow back to white.
+            items[i].setFillColor(sf::Color::Green);                        // sorted, change to green!
 
             i++;
         }
@@ -90,36 +80,4 @@ int main()
     }
 
     return 0;
-}
-
-void createShuffled(sf::RectangleShape items[])
-{
-    // create list
-    for (int i = 0; i < ARR_LEN; i++)
-    {
-        int item_height = (i + 1) * ITEM_HEIGHT_DIFF;
-        items[i] = sf::RectangleShape(sf::Vector2f(ITEM_WIDTH, item_height));
-        items[i].setPosition(sf::Vector2f(i * ITEM_WIDTH, WINDOW_HEIGHT - item_height));
-        items[i].setFillColor(sf::Color::White);
-    }
-
-    // shuffle using Fisher-Yates
-    srand(time(0));
-    for (int i = ARR_LEN - 1; i > 0; i--)
-    {
-        int j = rand() % (i + 1);
-        swap(items[i], items[j]);
-    }
-}
-
-void swap(sf::RectangleShape &a, sf::RectangleShape &b)
-{
-    // swap sizes
-    int temp = a.getSize().y;
-    a.setSize(sf::Vector2f(ITEM_WIDTH, b.getSize().y));
-    b.setSize(sf::Vector2f(ITEM_WIDTH, temp));
-
-    // re-adjust heights
-    a.setPosition(sf::Vector2f(a.getPosition().x, WINDOW_HEIGHT - a.getSize().y));
-    b.setPosition(sf::Vector2f(b.getPosition().x, WINDOW_HEIGHT - b.getSize().y));
 }
