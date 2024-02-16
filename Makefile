@@ -2,7 +2,9 @@ CC = g++
 CFLAGS = -std=c++11 -Wall -Wextra
 SMFL_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-all: bin bin/bouncing_cube bin/color_cube bin/gravity_cube bin/selection_sort bin/bubble_sort bin/insertion_sort bin/merge_sort bin/quick_sort bin/heap_sort
+all: bin bin/bouncing_cube bin/color_cube bin/gravity_cube sort
+
+sort: bin/selection_sort bin/bubble_sort bin/insertion_sort bin/merge_sort bin/quick_sort bin/heap_sort bin/radix_sort
 
 bin:
 	mkdir -p bin
@@ -33,6 +35,9 @@ bin/quick_sort: quick_sort.cpp SortManager.cpp SortManager.hpp
 
 bin/heap_sort: heap_sort.cpp SortManager.cpp SortManager.hpp
 	$(CC) $(CFLAGS)  heap_sort.cpp SortManager.cpp -o bin/heap_sort $(SMFL_LIBS)
+
+bin/radix_sort: radix_sort.cpp SortManager.cpp SortManager.hpp
+	$(CC) $(CFLAGS)  radix_sort.cpp SortManager.cpp -o bin/radix_sort $(SMFL_LIBS)
 
 bin/hello: hello.cpp
 	$(CC) hello.cpp -o bin/hello
